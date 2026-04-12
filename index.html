@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Révisions Quizlet - Anglais</title>
-  <meta name="description" content="Portail de révision Quizlet pour l'anglais, avec accès rapide au dossier CE1D et espace prêt pour d'autres matières." />
+  <meta name="description" content="Portail de révision Quizlet pour l'anglais CE1D avec accès direct à chaque chapitre." />
   <meta name="color-scheme" content="light dark" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,17 +33,18 @@
     html{scroll-behavior:smooth;-webkit-text-size-adjust:none;text-size-adjust:none}
     body{margin:0;font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;background:var(--color-bg);color:var(--color-text)}
     a{color:inherit;text-decoration:none}
-    button{font:inherit;cursor:pointer}
-    .container{width:min(980px, calc(100% - 2rem));margin:0 auto}
+    button,input{font:inherit}
+    .container{width:min(1120px, calc(100% - 2rem));margin:0 auto}
     .header{position:sticky;top:0;z-index:10;background:color-mix(in srgb, var(--color-bg) 88%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid color-mix(in srgb, var(--color-border) 70%, transparent)}
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:var(--space-4);padding:var(--space-4) 0}
     .brand{display:flex;align-items:center;gap:var(--space-3)}
     .logo{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:var(--color-primary-highlight);color:var(--color-primary)}
     .brand strong{display:block;font-size:var(--text-sm)}
     .brand span{display:block;font-size:var(--text-xs);color:var(--color-text-muted)}
-    .icon-btn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--color-border);background:var(--color-surface)}
+    .right-tools{display:flex;align-items:center;gap:var(--space-3)}
+    .search{width:min(320px, 60vw);padding:.85rem 1rem;border-radius:999px;border:1px solid var(--color-border);background:var(--color-surface);color:var(--color-text)}
+    .icon-btn{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid var(--color-border);background:var(--color-surface);cursor:pointer}
     .hero{padding:clamp(3rem,7vw,6rem) 0 var(--space-10)}
-    .hero-card,.chapter-card,.future-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
     .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:var(--space-8);align-items:start}
     .eyebrow{font-size:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-muted);font-weight:700}
     h1,h2,h3{margin:0;line-height:1.15}
@@ -51,20 +52,22 @@
     h2{font-family:var(--font-display);font-size:var(--text-xl)}
     h3{font-size:var(--text-lg)}
     p{margin:0;color:var(--color-text-muted)}
-    .hero-copy{display:grid;gap:var(--space-5)}
-    .hero-card{padding:var(--space-6);display:grid;gap:var(--space-4)}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.92rem 1.15rem;border-radius:var(--radius-full);border:1px solid transparent;font-weight:600;transition:.18s ease}
+    .hero-copy,.hero-card,.chapter-card{display:grid;gap:var(--space-4)}
+    .hero-card,.chapter-card{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm)}
+    .hero-card{padding:var(--space-6)}
+    .actions{display:flex;flex-wrap:wrap;gap:var(--space-3)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:.9rem 1.1rem;border-radius:var(--radius-full);border:1px solid transparent;font-weight:600;transition:.18s ease;cursor:pointer}
     .btn-primary{background:var(--color-primary);color:var(--color-text-inverse)}
     .btn-primary:hover{background:var(--color-primary-hover)}
     .btn-secondary{background:var(--color-surface-offset);color:var(--color-text);border-color:var(--color-border)}
+    .badge{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;background:var(--color-primary-highlight);color:var(--color-primary)}
     .section{padding:var(--space-8) 0}
     .section-head{display:flex;justify-content:space-between;align-items:end;gap:var(--space-4);margin-bottom:var(--space-5)}
-    .chapter-grid,.future-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
-    .chapter-card,.future-card{padding:var(--space-5);display:grid;gap:var(--space-3)}
-    .badge{display:inline-flex;align-items:center;padding:.35rem .7rem;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;background:var(--color-primary-highlight);color:var(--color-primary)}
-    .actions{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-2)}
+    .chapter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+    .chapter-card{padding:var(--space-5)}
+    .chapter-card.hidden{display:none}
     .footer{padding:var(--space-10) 0 var(--space-12);text-align:center;color:var(--color-text-muted);font-size:var(--text-sm)}
-    @media (max-width: 860px){.hero-grid,.chapter-grid,.future-grid{grid-template-columns:1fr}.topbar,.section-head{align-items:flex-start;flex-direction:column}}
+    @media (max-width: 900px){.hero-grid,.chapter-grid{grid-template-columns:1fr}.topbar,.section-head{align-items:flex-start;flex-direction:column}.right-tools{width:100%}.search{width:100%}}
   </style>
 </head>
 <body>
@@ -82,9 +85,12 @@
           <span>By Electrons Libres</span>
         </div>
       </div>
-      <button class="icon-btn" id="themeToggle" aria-label="Basculer le thème">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
+      <div class="right-tools">
+        <input id="searchInput" class="search" type="search" placeholder="Rechercher un chapitre d'anglais" aria-label="Rechercher un chapitre d'anglais">
+        <button class="icon-btn" id="themeToggle" aria-label="Basculer le thème">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -92,67 +98,135 @@
     <section class="hero" id="anglais">
       <div class="container hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">Anglais</div>
-          <h1>Retrouver rapidement les Quizlet utiles pour réviser l’anglais.</h1>
-          <p>Cette première version est centrée sur l’anglais et pointe directement vers le dossier Quizlet CE1D. Les autres matières sont déjà prévues pour la suite.</p>
+          <div class="eyebrow">Anglais CE1D</div>
+          <h1>Accéder en un clic au Quizlet du bon chapitre.</h1>
+          <p>Cette page regroupe tous les chapitres d’anglais déjà créés. Il suffit de cliquer sur le chapitre voulu pour ouvrir directement le bon Quizlet.</p>
           <div class="actions">
-            <a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/user/Raph_2808/folders/ce1d?i=36yitv&x=1xqt">Ouvrir le dossier Quizlet</a>
-            <a class="btn btn-secondary" href="#autres-matieres">Voir les autres matières</a>
+            <a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/user/Raph_2808/folders/ce1d?i=36yitv&x=1xqt">Ouvrir le dossier complet</a>
+            <a class="btn btn-secondary" href="#chapitres">Voir les chapitres</a>
           </div>
         </div>
         <aside class="hero-card">
-          <div class="eyebrow">Accès direct</div>
-          <h2>Dossier CE1D</h2>
-          <p>Le lien principal renvoie vers le dossier Quizlet public de révision. Il peut être utilisé immédiatement depuis cette page.</p>
+          <div class="eyebrow">Contenu</div>
+          <h2>15 parties + 11a / 11b / 11c</h2>
+          <p>Tous les liens envoyés ont été intégrés pour permettre un accès direct à chaque thème d’anglais.</p>
           <span class="badge">Quizlet public</span>
         </aside>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="chapitres">
       <div class="container">
         <div class="section-head">
           <div>
-            <div class="eyebrow">Liens anglais</div>
-            <h2>Révisions disponibles</h2>
+            <div class="eyebrow">Chapitres</div>
+            <h2>Liens directs</h2>
           </div>
-          <p>Tu pourras ajouter ici d’autres liens de chapitres plus tard si besoin.</p>
+          <p>Recherche possible par numéro, thème ou mot-clé.</p>
         </div>
-        <div class="chapter-grid">
-          <article class="chapter-card">
-            <span class="badge">Principal</span>
-            <h3>Dossier CE1D anglais</h3>
-            <p>Accès direct au dossier Quizlet déjà prêt et fonctionnel.</p>
-            <div class="actions">
-              <a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/user/Raph_2808/folders/ce1d?i=36yitv&x=1xqt">Ouvrir Quizlet</a>
-            </div>
+        <div class="chapter-grid" id="chapterGrid">
+          <article class="chapter-card" data-search="1 numbers">
+            <span class="badge">Partie 1</span>
+            <h3>Numbers</h3>
+            <p>Nombres et bases de vocabulaire numérique.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/it/1130659773/anglais-1-numbers-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
           </article>
-          <article class="chapter-card">
-            <span class="badge">À compléter</span>
-            <h3>Autre chapitre d’anglais</h3>
-            <p>Tu pourras remplacer cette carte par un lien vers un set ou un autre dossier plus spécifique.</p>
-            <div class="actions">
-              <a class="btn btn-secondary" href="#">Lien à ajouter plus tard</a>
-            </div>
+          <article class="chapter-card" data-search="2 ordinal numbers date">
+            <span class="badge">Partie 2</span>
+            <h3>Ordinal numbers to express the date</h3>
+            <p>Dates, ordinaux et expression de la date.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166782290/anglais-2-ordinal-numbers-to-express-the-date-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="autres-matieres">
-      <div class="container">
-        <div class="section-head">
-          <div>
-            <div class="eyebrow">Suite</div>
-            <h2>Matières prêtes pour la suite</h2>
-          </div>
-          <p>Ces espaces sont déjà en place pour tes futurs liens Quizlet.</p>
-        </div>
-        <div class="future-grid">
-          <article class="future-card"><h3>Math</h3><p>À compléter avec les prochains liens.</p></article>
-          <article class="future-card"><h3>Français</h3><p>À compléter avec les prochains liens.</p></article>
-          <article class="future-card"><h3>Sciences</h3><p>À compléter avec les prochains liens.</p></article>
-          <article class="future-card"><h3>Histoire / Géo</h3><p>À compléter avec les prochains liens.</p></article>
+          <article class="chapter-card" data-search="3 days months seasons time frequency">
+            <span class="badge">Partie 3</span>
+            <h3>Days, months, seasons, time and frequency</h3>
+            <p>Jours, mois, saisons, heure et fréquence.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166783851/anglais-3-days-months-seasons-time-and-frequency-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="4 colours colors">
+            <span class="badge">Partie 4</span>
+            <h3>Colours</h3>
+            <p>Couleurs et vocabulaire de base associé.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166784398/anglais-4-colours-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="5 family">
+            <span class="badge">Partie 5</span>
+            <h3>The family</h3>
+            <p>Membres de la famille et vocabulaire familial.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166810875/anglais-5-the-family-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="6 countries nationalities languages">
+            <span class="badge">Partie 6</span>
+            <h3>Countries, nationalities, languages</h3>
+            <p>Pays, nationalités et langues.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166811397/anglais-6-countries-nationalities-languages-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="7 daily routine chores">
+            <span class="badge">Partie 7</span>
+            <h3>Daily routine and chores</h3>
+            <p>Routine quotidienne et tâches ménagères.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166813356/anglais-7-daily-routine-and-chores-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="8 school">
+            <span class="badge">Partie 8</span>
+            <h3>School</h3>
+            <p>École, matériel scolaire et consignes.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166813886/anglais-8-school-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="9 jobs">
+            <span class="badge">Partie 9</span>
+            <h3>Jobs</h3>
+            <p>Métiers et vocabulaire du travail.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166814503/anglais-9-jobs-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="10 free time hobbies">
+            <span class="badge">Partie 10</span>
+            <h3>Free time</h3>
+            <p>Loisirs, hobbies et activités du temps libre.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166814988/anglais-10-free-time-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="11a body parts">
+            <span class="badge">Partie 11a</span>
+            <h3>Body parts</h3>
+            <p>Parties du corps et vocabulaire corporel.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166815497/anglais-11a-body-parts-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="11b appearance">
+            <span class="badge">Partie 11b</span>
+            <h3>Appearance</h3>
+            <p>Apparence physique, description et look.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166818741/anglais-11b-appearance-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="11c character personality">
+            <span class="badge">Partie 11c</span>
+            <h3>Character</h3>
+            <p>Caractère, personnalité et adjectifs.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166819093/anglais-11c-character-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="12 animals">
+            <span class="badge">Partie 12</span>
+            <h3>Animals</h3>
+            <p>Animaux domestiques, sauvages et vocabulaire associé.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166819478/anglais-12-animals-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="13 transport">
+            <span class="badge">Partie 13</span>
+            <h3>Transport</h3>
+            <p>Moyens de transport et déplacements.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166819965/anglais-13-transport-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="14 weather">
+            <span class="badge">Partie 14</span>
+            <h3>The weather</h3>
+            <p>Météo, climat et expressions utiles.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166820462/anglais-14-the-weather-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
+          <article class="chapter-card" data-search="15 holidays vacation">
+            <span class="badge">Partie 15</span>
+            <h3>Holidays</h3>
+            <p>Vacances, voyages et activités de congé.</p>
+            <div class="actions"><a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="https://quizlet.com/be/1166820804/anglais-15-holidays-flash-cards/?i=36yitv&x=1jqt">Ouvrir Quizlet</a></div>
+          </article>
         </div>
       </div>
     </section>
@@ -165,18 +239,30 @@
   <script>
     const themeToggle = document.getElementById('themeToggle');
     const root = document.documentElement;
+    const searchInput = document.getElementById('searchInput');
+    const cards = Array.from(document.querySelectorAll('.chapter-card'));
     let theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
     root.setAttribute('data-theme', theme);
+
     function renderThemeIcon(mode) {
       themeToggle.innerHTML = mode === 'dark'
         ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>'
         : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
     }
     renderThemeIcon(theme);
+
     themeToggle.addEventListener('click', () => {
       theme = theme === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', theme);
       renderThemeIcon(theme);
+    });
+
+    searchInput.addEventListener('input', function () {
+      const term = this.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const text = card.dataset.search.toLowerCase();
+        card.classList.toggle('hidden', term !== '' && !text.includes(term));
+      });
     });
   </script>
 </body>
