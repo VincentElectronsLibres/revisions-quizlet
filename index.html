@@ -143,13 +143,7 @@
       display: flex; align-items: center; gap: 0.75rem;
       text-decoration: none; color: inherit;
     }
-    .brand-logo {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--accent1), var(--accent3));
-      display: grid; place-items: center;
-      font-family: var(--font-display);
-      font-size: 1.1rem; font-weight: 900; color: #fff;
-    }
+
     .brand-text strong { display: block; font-size: 0.9rem; font-weight: 700; }
     .brand-text span { display: block; font-size: 0.75rem; color: var(--muted); }
     .header-right { display: flex; gap: 0.5rem; align-items: center; }
@@ -341,11 +335,11 @@
       font-size: 1rem;
       margin-bottom: 0.5rem;
     }
-    .quizlet-folder-btn {
+    .pdf-btn {
       display: inline-flex; align-items: center; gap: 0.6rem;
       padding: 0.75rem 1.5rem;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent4), #6c63ff);
+      background: linear-gradient(135deg, #e53170, #f25f4c);
       color: #fff;
       font-family: var(--font-body);
       font-weight: 700;
@@ -355,7 +349,7 @@
       margin-top: 1.2rem;
       margin-bottom: 2.5rem;
     }
-    .quizlet-folder-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+    .pdf-btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
     /* Search */
     .search-wrap {
@@ -504,7 +498,6 @@
   <header>
     <div class="header-inner">
       <a class="brand" href="#" onclick="showPage('home'); return false;">
-        <div class="brand-logo">RL</div>
         <div class="brand-text">
           <strong>Révisions CE1D</strong>
           <span>By Electrons Libres</span>
@@ -601,9 +594,9 @@
         <div class="hero-eyebrow" style="justify-content:flex-start">🇬🇧 Anglais CE1D</div>
         <h1 class="subject-page-title">Vocabulaire &<br>Fonctions <em style="font-style:italic;background:linear-gradient(135deg,var(--accent4),#6c63ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Langagières</em></h1>
         <p class="subject-page-sub">15 chapitres • Quizlet public • Flashcards prêtes</p>
-        <a class="quizlet-folder-btn" href="https://quizlet.com/user/Raph_2808/folders/ce1d?i=36yitv&x=1xqt" target="_blank" rel="noopener noreferrer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-          Ouvrir le dossier complet CE1D
+        <a class="pdf-btn" href="https://drive.google.com/file/d/1UqnBxuTWEUCBaPt-_f0X5NwJ1z76sh75/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+          Télécharger le cours complet (PDF)
         </a>
 
         <div class="search-wrap">
