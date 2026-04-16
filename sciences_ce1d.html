@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sciences CE1D – Révisions</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fira+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #22263a;
+    --border: #2e3350;
+    --text: #e8eaf6;
+    --muted: #8892b0;
+    --accent1: #4fc3f7;   /* 1ère – bleu ciel */
+    --accent2: #81c784;   /* 2ème – vert */
+    --gold: #ffd54f;
+    --pink: #f48fb1;
+    --orange: #ffb74d;
+    --correct: #66bb6a;
+    --wrong: #ef5350;
+    --radius: 14px;
+    --shadow: 0 4px 32px rgba(0,0,0,.45);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0d1b3e 0%, #1a1d27 60%, #0f2820 100%);
+    padding: 60px 24px 40px;
+    text-align: center;
+    border-bottom: 2px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(79,195,247,.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 50%, rgba(129,199,132,.08) 0%, transparent 60%);
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -.5px;
+    background: linear-gradient(90deg, var(--accent1), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+  }
+  .hero p {
+    color: var(--muted);
+    margin-top: 10px;
+    font-size: 1.05rem;
+    position: relative;
+  }
+  .badge-row {
+    display: flex; gap: 10px; justify-content: center; margin-top: 22px;
+    flex-wrap: wrap; position: relative;
+  }
+  .badge {
+    padding: 6px 16px;
+    border-radius: 99px;
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+  }
+  .badge-1 { background: rgba(79,195,247,.15); color: var(--accent1); border: 1px solid rgba(79,195,247,.3); }
+  .badge-2 { background: rgba(129,199,132,.15); color: var(--accent2); border: 1px solid rgba(129,199,132,.3); }
+
+  /* ── NAV TABS ── */
+  .nav-tabs {
+    display: flex; justify-content: center; gap: 8px;
+    padding: 20px 24px 0;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 22px;
+    border-radius: 99px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .tab-btn:hover { border-color: var(--muted); color: var(--text); }
+  .tab-btn.active-1 { border-color: var(--accent1); color: var(--accent1); background: rgba(79,195,247,.1); }
+  .tab-btn.active-2 { border-color: var(--accent2); color: var(--accent2); background: rgba(129,199,132,.1); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 960px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 24px; margin-top: 8px;
+  }
+  .section-badge {
+    padding: 4px 14px; border-radius: 99px;
+    font-weight: 900; font-size: .8rem; letter-spacing: 1px;
+  }
+  .sb-1 { background: var(--accent1); color: #000; }
+  .sb-2 { background: var(--accent2); color: #000; }
+  .section-header h2 { font-size: 1.5rem; font-weight: 800; }
+
+  /* ── CHAPTER CARDS ── */
+  .chapter-list { display: flex; flex-direction: column; gap: 16px; }
+
+  .chapter {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .chapter:hover { border-color: var(--muted); }
+  .chapter.open-1 { border-color: var(--accent1); }
+  .chapter.open-2 { border-color: var(--accent2); }
+
+  .chapter-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+  }
+  .chapter-head-left { display: flex; align-items: center; gap: 12px; }
+  .ch-icon {
+    width: 38px; height: 38px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem; flex-shrink: 0;
+  }
+  .ch-icon-1 { background: rgba(79,195,247,.15); }
+  .ch-icon-2 { background: rgba(129,199,132,.15); }
+  .chapter-title { font-weight: 800; font-size: 1.05rem; }
+  .chapter-subtitle { color: var(--muted); font-size: .82rem; margin-top: 2px; }
+  .ch-chevron {
+    font-size: 1.1rem; transition: transform .25s; flex-shrink: 0;
+    color: var(--muted);
+  }
+  .ch-chevron.rotated { transform: rotate(180deg); }
+
+  /* ── CHAPTER BODY ── */
+  .chapter-body { display: none; padding: 0 20px 20px; }
+  .chapter-body.show { display: block; }
+
+  /* ── TABS INSIDE CHAPTER ── */
+  .inner-tabs { display: flex; gap: 6px; margin-bottom: 16px; }
+  .inner-tab {
+    padding: 7px 16px; border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700; font-size: .88rem;
+    cursor: pointer; transition: all .18s;
+  }
+  .inner-tab.active-1 { border-color: var(--accent1); color: var(--accent1); background: rgba(79,195,247,.08); }
+  .inner-tab.active-2 { border-color: var(--accent2); color: var(--accent2); background: rgba(129,199,132,.08); }
+
+  .inner-panel { display: none; }
+  .inner-panel.show { display: block; }
+
+  /* ── SYNTHÈSE ── */
+  .synth { font-size: .95rem; line-height: 1.75; }
+
+  .synth-block {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    border-left: 4px solid var(--accent1);
+  }
+  .synth-block.c2 { border-color: var(--accent2); }
+  .synth-block.cgold { border-color: var(--gold); }
+  .synth-block.corange { border-color: var(--orange); }
+  .synth-block.cpink { border-color: var(--pink); }
+
+  .synth-block h3 {
+    font-size: .9rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: .8px; margin-bottom: 10px; color: var(--accent1);
+  }
+  .synth-block.c2 h3 { color: var(--accent2); }
+  .synth-block.cgold h3 { color: var(--gold); }
+  .synth-block.corange h3 { color: var(--orange); }
+  .synth-block.cpink h3 { color: var(--pink); }
+
+  .synth table {
+    width: 100%; border-collapse: collapse; font-size: .9rem; margin-top: 8px;
+  }
+  .synth th {
+    background: rgba(255,255,255,.06);
+    padding: 8px 12px; text-align: left;
+    font-weight: 800; font-size: .8rem;
+    letter-spacing: .5px; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+  .synth td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    vertical-align: top;
+  }
+  .synth tr:last-child td { border-bottom: none; }
+  .synth tr:nth-child(even) td { background: rgba(255,255,255,.02); }
+
+  .tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: .78rem; font-weight: 700; margin: 1px;
+  }
+  .tag-blue { background: rgba(79,195,247,.2); color: var(--accent1); }
+  .tag-green { background: rgba(129,199,132,.2); color: var(--accent2); }
+  .tag-gold { background: rgba(255,213,79,.2); color: var(--gold); }
+  .tag-pink { background: rgba(244,143,177,.2); color: var(--pink); }
+  .tag-orange { background: rgba(255,183,77,.2); color: var(--orange); }
+
+  .formula-box {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'Fira Mono', monospace;
+    font-size: 1rem;
+    color: var(--gold);
+    margin: 10px 0;
+    text-align: center;
+  }
+
+  .key-point {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px;
+    background: rgba(255,213,79,.05);
+    border-radius: 8px;
+    border: 1px solid rgba(255,213,79,.15);
+    margin-top: 8px;
+    font-size: .9rem;
+  }
+  .key-point::before { content: '⭐'; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── QUIZ ── */
+  .quiz-area { }
+  .quiz-progress {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 18px; font-size: .85rem; color: var(--muted);
+  }
+  .prog-bar-wrap {
+    flex: 1; height: 6px; background: var(--border); border-radius: 99px; overflow: hidden;
+  }
+  .prog-bar { height: 100%; border-radius: 99px; transition: width .4s; }
+  .pb-1 { background: var(--accent1); }
+  .pb-2 { background: var(--accent2); }
+
+  .quiz-card {
+    background: var(--surface2);
+    border-radius: 12px;
+    padding: 22px 24px;
+    margin-bottom: 16px;
+  }
+  .quiz-q {
+    font-size: 1.05rem; font-weight: 700; margin-bottom: 18px;
+    line-height: 1.5;
+  }
+  .quiz-q .qnum {
+    color: var(--muted); font-size: .85rem; font-weight: 600;
+    display: block; margin-bottom: 6px;
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media(max-width:500px) { .options-grid { grid-template-columns: 1fr; } }
+
+  .opt-btn {
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 600; font-size: .92rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all .18s;
+    line-height: 1.4;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--muted); background: var(--surface2); }
+  .opt-btn.correct { border-color: var(--correct); background: rgba(102,187,106,.15); color: #a5d6a7; }
+  .opt-btn.wrong   { border-color: var(--wrong);   background: rgba(239,83,80,.15);   color: #ef9a9a; }
+  .opt-btn:disabled { cursor: not-allowed; }
+
+  .quiz-feedback {
+    display: none; margin-top: 14px;
+    padding: 12px 16px; border-radius: 10px;
+    font-size: .9rem; font-weight: 600; line-height: 1.5;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: rgba(102,187,106,.12); border: 1px solid rgba(102,187,106,.3); color: #a5d6a7; }
+  .quiz-feedback.ko { background: rgba(239,83,80,.12);   border: 1px solid rgba(239,83,80,.3);   color: #ef9a9a; }
+
+  .quiz-nav {
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    margin-top: 10px;
+  }
+  .btn {
+    padding: 10px 22px; border-radius: 99px;
+    font-family: 'Nunito', sans-serif; font-weight: 800;
+    font-size: .9rem; cursor: pointer; border: none;
+    transition: all .18s;
+  }
+  .btn-1 { background: var(--accent1); color: #000; }
+  .btn-2 { background: var(--accent2); color: #000; }
+  .btn:hover { filter: brightness(1.1); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent; border: 2px solid var(--border);
+    color: var(--muted);
+    padding: 8px 18px; border-radius: 99px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: .88rem;
+    cursor: pointer; transition: all .18s;
+  }
+  .btn-ghost:hover { border-color: var(--muted); color: var(--text); }
+
+  .score-panel {
+    display: none; text-align: center; padding: 32px 20px;
+  }
+  .score-panel.show { display: block; }
+  .score-big {
+    font-size: 4rem; font-weight: 900; line-height: 1;
+    margin-bottom: 8px;
+  }
+  .score-sub { color: var(--muted); font-size: 1rem; margin-bottom: 24px; }
+  .score-stars { font-size: 2rem; margin-bottom: 20px; }
+
+  /* ── SECTION DIVIDER ── */
+  .sec-divider {
+    display: flex; align-items: center; gap: 14px;
+    margin: 36px 0 24px;
+  }
+  .sec-divider::before, .sec-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+  .sec-divider span {
+    font-size: .8rem; font-weight: 800; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+  /* hidden */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>🔬 Sciences CE1D</h1>
+  <p>Synthèses + Quiz interactifs — Raphaël Dessart · 2025–2026</p>
+  <div class="badge-row">
+    <span class="badge badge-1">1ère — Biologie &amp; Chimie</span>
+    <span class="badge badge-2">2ème — Biologie, Physique &amp; Chimie</span>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active-1" onclick="showYear('y1', this)">📘 1ère année</button>
+  <button class="tab-btn" onclick="showYear('y2', this)">📗 2ème année</button>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════ 1ÈRE ═══════════════════════════════ -->
+<div id="y1">
+
+  <div class="section-header">
+    <span class="section-badge sb-1">1ÈRE</span>
+    <h2>Biologie &amp; Chimie — 1er degré</h2>
+  </div>
+
+  <div class="chapter-list">
+
+    <!-- CH 1 -->
+    <div class="chapter" id="ch1_1">
+      <div class="chapter-head" onclick="toggleChapter('ch1_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🦠</div>
+          <div>
+            <div class="chapter-title">Les êtres vivants — caractéristiques</div>
+            <div class="chapter-subtitle">Systèmes, organes, tissus, cellules</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch1_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch1_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch1_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch1_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch1_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Structure des êtres vivants</h3>
+              <p>Chaque <strong>organisme</strong> est composé de plusieurs <strong>systèmes</strong> ou <strong>appareils</strong> reliés entre eux.</p>
+              <p style="margin-top:8px">Chaque système est constitué de plusieurs <strong>organes</strong> → formés de <strong>tissus</strong> → eux-mêmes formés de <strong>cellules</strong>.</p>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Les 4 grands systèmes</h3>
+              <table>
+                <tr><th>Système</th><th>Organe clé</th><th>Rôle principal</th></tr>
+                <tr><td><span class="tag tag-blue">Respiratoire</span></td><td>Alvéoles pulmonaires</td><td>Entrée O₂ / Sortie CO₂ + vapeur d'eau</td></tr>
+                <tr><td><span class="tag tag-gold">Circulatoire</span></td><td>Cœur (pompe)</td><td>Le sang transporte tous les éléments</td></tr>
+                <tr><td><span class="tag tag-green">Digestif</span></td><td>Intestin grêle</td><td>Dégradation → absorption → assimilation</td></tr>
+                <tr><td><span class="tag tag-pink">Urinaire</span></td><td>Reins</td><td>Élimination des déchets non-gazeux</td></tr>
+              </table>
+            </div>
+            <div class="key-point">Le cœur est une <strong>pompe</strong>, le sang est un <strong>transporteur</strong> : il distribue O₂ et nutriments aux cellules et ramène CO₂ et déchets.</div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch1_1">
+          <div id="qarea_ch1_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 2 -->
+    <div class="chapter" id="ch2_1">
+      <div class="chapter-head" onclick="toggleChapter('ch2_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🌿</div>
+          <div>
+            <div class="chapter-title">Les vivants et les non-vivants</div>
+            <div class="chapter-subtitle">Écosystème, caractéristiques, stimuli</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch2_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch2_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch2_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch2_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch2_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>L'écosystème</h3>
+              <p>Ensemble des espèces animales et végétales d'un même milieu + les relations entre elles et avec leur milieu.</p>
+              <p style="margin-top:10px">Il est composé de :</p>
+              <ul style="margin-left:18px;margin-top:6px;line-height:2">
+                <li><strong>Vivants</strong> → caractéristiques (voir ci-dessous)</li>
+                <li><strong>Non-vivants</strong> : composantes minérales (roches, eau, air…) + manifestations humaines (bâtiments, routes…)</li>
+              </ul>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Les 6 caractéristiques des vivants</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+                <span class="tag tag-blue">Se nourrir</span>
+                <span class="tag tag-green">Respirer</span>
+                <span class="tag tag-gold">Faire circuler des substances</span>
+                <span class="tag tag-pink">Se reproduire</span>
+                <span class="tag tag-orange">Réagir face aux stimuli</span>
+                <span class="tag tag-blue">Croître et se développer</span>
+              </div>
+            </div>
+            <div class="synth-block c2">
+              <h3>Les stimuli (2ème)</h3>
+              <p>Un <strong>stimulus</strong> (pl. stimuli) = facteur qui provoque un changement de comportement des êtres vivants.</p>
+              <table style="margin-top:10px">
+                <tr><th>Type de stimulus</th><th>Exemples</th></tr>
+                <tr><td>Récepteurs sensoriels</td><td>Ouïe, odorat, toucher, goût, vue</td></tr>
+                <tr><td>Signaux d'autres vivants</td><td>Sons, odeurs, couleurs</td></tr>
+                <tr><td>Modifications du milieu</td><td>Lumière, humidité, température</td></tr>
+              </table>
+              <p style="margin-top:8px;color:var(--muted);font-size:.85rem">Rôles des stimuli : nutrition, défense, reproduction…</p>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch2_1">
+          <div id="qarea_ch2_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 3 -->
+    <div class="chapter" id="ch3_1">
+      <div class="chapter-head" onclick="toggleChapter('ch3_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🍃</div>
+          <div>
+            <div class="chapter-title">Les vivants se nourrissent</div>
+            <div class="chapter-subtitle">Hétérotrophe, autotrophe, régimes alimentaires</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch3_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch3_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch3_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch3_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch3_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Hétérotrophe vs Autotrophe</h3>
+              <table>
+                <tr><th>Type</th><th>Définition</th><th>Sous-catégories</th><th>Exemples</th></tr>
+                <tr><td><span class="tag tag-orange">Hétérotrophe</span></td><td>Se nourrit de matière organique</td><td>Consommateurs + Décomposeurs</td><td>Zooplancton, cerf, requin, moule…</td></tr>
+                <tr><td><span class="tag tag-green">Autotrophe</span></td><td>Utilise matière minérale (sels, eau, CO₂)</td><td>Producteurs</td><td>Phytoplancton, plantes aquatiques</td></tr>
+              </table>
+            </div>
+            <div class="synth-block c2">
+              <h3>Les consommateurs : 3 régimes</h3>
+              <table>
+                <tr><th>Régime</th><th>Définition</th><th>Exemples</th></tr>
+                <tr><td><span class="tag tag-green">Phytophage</span></td><td>Exclusivement végétal</td><td>Zooplancton, cerf, vache</td></tr>
+                <tr><td><span class="tag tag-pink">Zoophage</span></td><td>Exclusivement animal</td><td>Requin, brochet, lynx</td></tr>
+                <tr><td><span class="tag tag-gold">Omnivore</span></td><td>Végétal ET animal</td><td>Moule, renard, sanglier</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Les décomposeurs</h3>
+              <p>Transforment la <strong>matière organique morte</strong> en <strong>matière minérale</strong>.</p>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch3_1">
+          <div id="qarea_ch3_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 4 -->
+    <div class="chapter" id="ch4_1">
+      <div class="chapter-head" onclick="toggleChapter('ch4_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🕸️</div>
+          <div>
+            <div class="chapter-title">Relations alimentaires</div>
+            <div class="chapter-subtitle">Chaînes alimentaires, réseau trophique</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch4_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch4_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch4_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch4_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch4_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Chaîne alimentaire</h3>
+              <div class="formula-box">Producteur (P) → C1 → C2 → C3 → …</div>
+              <p>P = Végétal | C1 = Phytophage/omnivore | C2, C3 = Zoophage/omnivore</p>
+            </div>
+            <div class="synth-block c2">
+              <h3>Réseau trophique</h3>
+              <p>Ensemble de chaînes alimentaires partageant <strong>au moins un maillon commun</strong>.</p>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Classification des animaux</h3>
+              <table>
+                <tr><th>Embranchement</th><th>Classes</th></tr>
+                <tr><td><span class="tag tag-blue">Vertébrés</span></td><td>Mammifères, oiseaux, amphibiens, poissons, reptiles</td></tr>
+                <tr><td><span class="tag tag-green">Invertébrés</span></td><td>Insectes, mollusques, crustacés…</td></tr>
+              </table>
+            </div>
+            <div class="key-point">Si une espèce disparaît d'un écosystème → rupture d'équilibre → perturbations en cascade dans tout le réseau trophique.</div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch4_1">
+          <div id="qarea_ch4_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 5 -->
+    <div class="chapter" id="ch5_1">
+      <div class="chapter-head" onclick="toggleChapter('ch5_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">💨</div>
+          <div>
+            <div class="chapter-title">Les vivants respirent</div>
+            <div class="chapter-subtitle">Types de respiration — milieux terrestre et aquatique</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch5_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch5_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch5_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch5_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch5_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Types de respiration</h3>
+              <table>
+                <tr><th>Type</th><th>Milieu</th><th>Ventilation</th><th>Exemples</th></tr>
+                <tr><td><span class="tag tag-blue">Pulmonaire</span></td><td>Terrestre</td><td>Air</td><td>Mammifères, oiseaux, reptiles</td></tr>
+                <tr><td><span class="tag tag-green">Trachéenne</span></td><td>Terrestre</td><td>Air (stigmates)</td><td>Insectes (abeilles, criquets)</td></tr>
+                <tr><td><span class="tag tag-gold">Cutanée</span></td><td>Terrestre/Aquatique</td><td>Air ou eau</td><td>Vers de terre, grenouille</td></tr>
+                <tr><td><span class="tag tag-pink">Branchiale</span></td><td>Aquatique</td><td>Eau</td><td>Poissons, crevettes</td></tr>
+                <tr><td><span class="tag tag-orange">Par diffusion</span></td><td>Aquatique</td><td>Eau</td><td>Méduses</td></tr>
+              </table>
+            </div>
+            <div class="key-point">Milieu de ventilation = <strong>air</strong> (terrestre) ou <strong>eau</strong> (aquatique). Les vivants aquatiques utilisent l'O₂ dissous dans l'eau.</div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch5_1">
+          <div id="qarea_ch5_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 6 -->
+    <div class="chapter" id="ch6_1">
+      <div class="chapter-head" onclick="toggleChapter('ch6_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">❤️</div>
+          <div>
+            <div class="chapter-title">La circulation sanguine</div>
+            <div class="chapter-subtitle">Fermée/ouverte, simple/double, complète/incomplète</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch6_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch6_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch6_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch6_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch6_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Types de circulation</h3>
+              <table>
+                <tr><th>Type</th><th>Définition</th></tr>
+                <tr><td><span class="tag tag-green">Fermée</span></td><td>Le sang est entièrement canalisé dans des vaisseaux</td></tr>
+                <tr><td><span class="tag tag-orange">Ouverte / lacunaire</span></td><td>Le sang n'est pas entièrement canalisé — interrompu par des lacunes</td></tr>
+                <tr><td><span class="tag tag-blue">Simple</span></td><td>Le sang passe <strong>1×</strong> par le cœur pour un circuit complet</td></tr>
+                <tr><td><span class="tag tag-pink">Double</span></td><td>Le sang passe <strong>2×</strong> par le cœur pour un circuit complet</td></tr>
+                <tr><td><span class="tag tag-green">Complète</span></td><td>Sang riche en O₂ et sang riche en CO₂ <strong>ne se mélangent pas</strong></td></tr>
+                <tr><td><span class="tag tag-gold">Incomplète</span></td><td>Sang riche en O₂ et sang riche en CO₂ <strong>se mélangent</strong></td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch6_1">
+          <div id="qarea_ch6_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 7 -->
+    <div class="chapter" id="ch7_1">
+      <div class="chapter-head" onclick="toggleChapter('ch7_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🧊</div>
+          <div>
+            <div class="chapter-title">Les états de la matière</div>
+            <div class="chapter-subtitle">Solide, liquide, gazeux — molécules</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch7_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch7_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch7_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch7_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch7_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Comparaison des 3 états</h3>
+              <table>
+                <tr><th>État</th><th>Volume</th><th>Forme</th><th>Molécules</th><th>Mouvement</th></tr>
+                <tr><td><span class="tag tag-blue">Solide</span></td><td>Invariable</td><td>Invariable</td><td>Proches, fortement liées, ordonnées</td><td>Vibrent sur elles-mêmes</td></tr>
+                <tr><td><span class="tag tag-green">Liquide</span></td><td>Invariable</td><td>Variable</td><td>Proches, faiblement liées, désordonnées</td><td>Roulent les unes sur les autres</td></tr>
+                <tr><td><span class="tag tag-orange">Gazeux</span></td><td>Variable</td><td>Variable</td><td>Éloignées, non liées, désordonnées</td><td>Très agitées</td></tr>
+              </table>
+            </div>
+            <div class="synth-block c2">
+              <h3>Points importants</h3>
+              <ul style="margin-left:16px;line-height:2.2">
+                <li>Solides : compact, pâteux ou poudreux</li>
+                <li>Liquides : surface libre toujours <strong>plane et horizontale</strong> (⊥ fil à plomb)</li>
+                <li>Gaz : les seuls <strong>compressibles, extensibles et élastiques</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch7_1">
+          <div id="qarea_ch7_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 8 -->
+    <div class="chapter" id="ch8_1">
+      <div class="chapter-head" onclick="toggleChapter('ch8_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🔥</div>
+          <div>
+            <div class="chapter-title">Les changements d'état</div>
+            <div class="chapter-subtitle">Fusion, vaporisation, sublimation… + corps purs vs mélanges</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch8_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch8_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch8_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch8_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch8_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Les 6 changements d'état</h3>
+              <table>
+                <tr><th>#</th><th>Nom</th><th>Transition</th><th>Chaleur</th></tr>
+                <tr><td>1</td><td><span class="tag tag-orange">Fusion</span></td><td>Solide → Liquide</td><td>Apport ↑</td></tr>
+                <tr><td>2</td><td><span class="tag tag-blue">Solidification</span></td><td>Liquide → Solide</td><td>Perte ↓</td></tr>
+                <tr><td>3</td><td><span class="tag tag-green">Liquéfaction</span></td><td>Gaz → Liquide</td><td>Perte ↓</td></tr>
+                <tr><td>4</td><td><span class="tag tag-orange">Vaporisation</span></td><td>Liquide → Gaz</td><td>Apport ↑</td></tr>
+                <tr><td>5</td><td><span class="tag tag-pink">Condensation solide</span></td><td>Gaz → Solide</td><td>Perte ↓</td></tr>
+                <tr><td>6</td><td><span class="tag tag-gold">Sublimation</span></td><td>Solide → Gaz</td><td>Apport ↑</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Système fermé — ce qui est conservé</h3>
+              <ul style="margin-left:16px;line-height:2">
+                <li>✅ La <strong>nature</strong> du corps pur</li>
+                <li>✅ La <strong>masse</strong> (même quantité de molécules)</li>
+                <li>❌ Le <strong>volume</strong> n'est généralement PAS conservé</li>
+              </ul>
+            </div>
+            <div class="synth-block c2">
+              <h3>Corps pur vs Mélange</h3>
+              <table>
+                <tr><th></th><th>Corps pur</th><th>Mélange</th></tr>
+                <tr><td>Définition</td><td>Une seule sorte de molécules</td><td>Plusieurs sortes de molécules</td></tr>
+                <tr><td>Changement d'état</td><td>Température <strong>constante</strong> → palier</td><td>Température <strong>variable</strong> → pas de palier</td></tr>
+              </table>
+            </div>
+            <div class="synth-block">
+              <h3>Facteurs influençant la vitesse</h3>
+              <ul style="margin-left:16px;line-height:2">
+                <li>Grande surface de contact → plus <strong>rapide</strong></li>
+                <li>Source de chaleur importante → plus <strong>rapide</strong></li>
+                <li>Grande quantité de matière → plus <strong>lent</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch8_1">
+          <div id="qarea_ch8_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 9 -->
+    <div class="chapter" id="ch9_1">
+      <div class="chapter-head" onclick="toggleChapter('ch9_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">🧪</div>
+          <div>
+            <div class="chapter-title">Mélange et corps pur</div>
+            <div class="chapter-subtitle">Homogène, hétérogène, solution, soluté, solvant</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch9_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch9_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch9_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch9_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch9_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Types de mélange</h3>
+              <table>
+                <tr><th>Type</th><th>Définition</th><th>Séparation</th></tr>
+                <tr><td><span class="tag tag-blue">Homogène</span></td><td>Constituants non distinguables à l'œil nu</td><td>Distillation, cristallisation, évaporation</td></tr>
+                <tr><td><span class="tag tag-orange">Hétérogène</span></td><td>Constituants distinguables à l'œil nu</td><td>Filtration, tamisage, aimantation, décantation, tri manuel</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Solution = Soluté + Solvant</h3>
+              <table>
+                <tr><th>Terme</th><th>Définition</th><th>Exemple</th></tr>
+                <tr><td><span class="tag tag-gold">Solution</span></td><td>Mélange homogène</td><td>Café sucré</td></tr>
+                <tr><td><span class="tag tag-pink">Soluté</span></td><td>Substance qui se dissout (S, L ou G)</td><td>Sucre</td></tr>
+                <tr><td><span class="tag tag-blue">Solvant</span></td><td>Substance qui dissout</td><td>Eau du café</td></tr>
+              </table>
+            </div>
+            <div class="synth-block c2">
+              <h3>Miscibles vs Non miscibles</h3>
+              <table>
+                <tr><th>Miscibles</th><th>Non miscibles</th></tr>
+                <tr><td>Mélange homogène — volumes ne s'additionnent pas (molécules s'intercalent)</td><td>Mélange hétérogène — volumes s'additionnent (molécules se superposent)</td></tr>
+                <tr><td>Ex : eau + encre</td><td>Ex : eau + huile</td></tr>
+              </table>
+            </div>
+            <div class="key-point">Solution <strong>saturée</strong> : un solvant ne peut dissoudre indéfiniment → le soluté se dépose au fond.</div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch9_1">
+          <div id="qarea_ch9_1"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 10 -->
+    <div class="chapter" id="ch10_1">
+      <div class="chapter-head" onclick="toggleChapter('ch10_1','1')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-1">⚡</div>
+          <div>
+            <div class="chapter-title">L'énergie</div>
+            <div class="chapter-subtitle">Sources, formes, transferts de chaleur, masse volumique</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch10_1">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch10_1">
+        <div class="inner-tabs">
+          <button class="inner-tab active-1" onclick="switchInner('ch10_1','synth','1')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch10_1','quiz','1')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch10_1">
+          <div class="synth">
+            <div class="synth-block">
+              <h3>Sources et formes d'énergie</h3>
+              <table>
+                <tr><th>Sources</th><th>Formes</th></tr>
+                <tr><td>Vent, eau, soleil, bois, gaz, charbon, pétrole, pile, nourriture, uranium…</td><td>Thermique, électrique, mécanique, éolienne, rayonnante, chimique, hydraulique, fossile, nucléaire…</td></tr>
+              </table>
+              <div class="key-point" style="margin-top:10px">Transformation : E₁ → E₂ → E₃ → … avec souvent des <strong>pertes sous forme thermique</strong>.</div>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Chaleur vs Température</h3>
+              <table>
+                <tr><th>Chaleur (énergie thermique)</th><th>Température</th></tr>
+                <tr><td>Se transfère du chaud vers le froid. Provoque agitation des molécules → ↑ température ou changement d'état.</td><td>Mesure le degré d'agitation des molécules. Unité : °C. Instrument : thermomètre.</td></tr>
+              </table>
+            </div>
+            <div class="synth-block c2">
+              <h3>Transfert de chaleur — 3 modes</h3>
+              <table>
+                <tr><th>Mode</th><th>Milieu</th><th>Contact</th></tr>
+                <tr><td><span class="tag tag-blue">Conduction</span></td><td>Solides</td><td>Avec contact, sans mouvement</td></tr>
+                <tr><td><span class="tag tag-green">Convection</span></td><td>Liquides/Gaz</td><td>Avec mouvement de matière</td></tr>
+                <tr><td><span class="tag tag-gold">Rayonnement</span></td><td>S, L, G</td><td>À travers le vide</td></tr>
+              </table>
+              <p style="margin-top:10px"><span class="tag tag-blue">Conducteur thermique</span> : laisse passer la chaleur | <span class="tag tag-orange">Isolant thermique</span> : laisse difficilement passer la chaleur</p>
+            </div>
+            <div class="synth-block cpink">
+              <h3>Masse volumique φ (Rhô)</h3>
+              <div class="formula-box">φ = m / V    (kg/m³)</div>
+              <ul style="margin-left:16px;line-height:2">
+                <li>Caractéristique d'un corps pur — indépendante de la quantité</li>
+                <li>φ eau = 1000 kg/m³</li>
+                <li>En général : φ solide &gt; φ liquide (sauf l'eau !</li>
+                <li>φ gaz &lt; φ liquide et φ solide</li>
+                <li>Gaz chauffé : dilatation → volume ↑ → φ ↓</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch10_1">
+          <div id="qarea_ch10_1"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /chapter-list y1 -->
+</div><!-- /y1 -->
+
+<!-- ═══════════════════════════════ 2ÈME ═══════════════════════════════ -->
+<div id="y2" class="hidden">
+
+  <div class="section-header">
+    <span class="section-badge sb-2">2ÈME</span>
+    <h2>Biologie, Physique &amp; Chimie — 2e degré</h2>
+  </div>
+
+  <div class="chapter-list">
+
+    <!-- CH 1 Y2 -->
+    <div class="chapter" id="ch1_2">
+      <div class="chapter-head" onclick="toggleChapter('ch1_2','2')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-2">💧</div>
+          <div>
+            <div class="chapter-title">O₂ dissous dans l'eau</div>
+            <div class="chapter-subtitle">Variables qui influencent la quantité d'O₂ dissous</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch1_2">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch1_2">
+        <div class="inner-tabs">
+          <button class="inner-tab active-2" onclick="switchInner('ch1_2','synth','2')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch1_2','quiz','2')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch1_2">
+          <div class="synth">
+            <div class="synth-block c2">
+              <h3>Variables influençant l'O₂ dissous</h3>
+              <table>
+                <tr><th>Variable</th><th>Effet sur O₂ dissous</th></tr>
+                <tr><td><span class="tag tag-orange">Température ↑</span></td><td>Moins d'O₂ dissous</td></tr>
+                <tr><td><span class="tag tag-blue">Agitation de l'eau ↑</span></td><td>Plus d'O₂ dissous (surface d'échange ↑)</td></tr>
+                <tr><td><span class="tag tag-green">Végétaux (photosynthèse) + lumière</span></td><td>Plus d'O₂ produit → plus dissous</td></tr>
+              </table>
+            </div>
+            <div class="key-point">Composition de l'air : 78% azote · 21% O₂ · 0,03% CO₂ · autres gaz · vapeur d'eau (variable).</div>
+            <div class="key-point">Eau saturée en O₂ : le surplus repart dans l'air atmosphérique — échanges constants air↔eau.</div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch1_2">
+          <div id="qarea_ch1_2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 2 Y2 -->
+    <div class="chapter" id="ch2_2">
+      <div class="chapter-head" onclick="toggleChapter('ch2_2','2')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-2">🌱</div>
+          <div>
+            <div class="chapter-title">Les vivants se reproduisent</div>
+            <div class="chapter-subtitle">Sexuée / asexuée, fécondation, développement</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch2_2">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch2_2">
+        <div class="inner-tabs">
+          <button class="inner-tab active-2" onclick="switchInner('ch2_2','synth','2')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch2_2','quiz','2')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch2_2">
+          <div class="synth">
+            <div class="synth-block c2">
+              <h3>Reproduction sexuée vs asexuée</h3>
+              <table>
+                <tr><th></th><th>Sexuée</th><th>Asexuée</th></tr>
+                <tr><td>Gamètes</td><td>✅ Implication des cellules reproductrices</td><td>❌ Pas de gamètes</td></tr>
+                <tr><td>Modes</td><td>Oviparité, viviparité, ovoviviparité (terrestre) | Oviparité (aquatique)</td><td>Scissiparité, parthénogénèse, bourgeonnement</td></tr>
+              </table>
+            </div>
+            <div class="synth-block">
+              <h3>Fécondation</h3>
+              <table>
+                <tr><th>Type</th><th>Lieu</th><th>Milieu</th></tr>
+                <tr><td><span class="tag tag-blue">Interne</span></td><td>À l'intérieur du corps d'un parent</td><td>Terrestre</td></tr>
+                <tr><td><span class="tag tag-green">Externe</span></td><td>À l'extérieur du corps</td><td>Aquatique</td></tr>
+              </table>
+              <p style="margin-top:8px">Résultat dans les deux cas : <strong>cellule-œuf</strong></p>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Étapes conception → naissance (humain)</h3>
+              <div class="formula-box">Ovulation → Fécondation → Zygote → Multiplication cellulaire → Embryon → Fœtus → Accouchement</div>
+              <p style="margin-top:6px;font-size:.85rem;color:var(--muted)">Accouchement : travail → expulsion → délivrance (expulsion du placenta)</p>
+            </div>
+            <div class="synth-block c2">
+              <h3>Type de développement</h3>
+              <ul style="margin-left:16px;line-height:2.2">
+                <li><span class="tag tag-green">Croissance continue</span> : petits ont dès la naissance les caractéristiques de l'adulte</li>
+                <li><span class="tag tag-orange">Métamorphoses</span> : transformations entre naissance et âge adulte</li>
+                <li><span class="tag tag-blue">Mue</span> : changement de poils/plumes/peau annuel ou à certaines étapes</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch2_2">
+          <div id="qarea_ch2_2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 3 Y2 -->
+    <div class="chapter" id="ch3_2">
+      <div class="chapter-head" onclick="toggleChapter('ch3_2','2')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-2">⚡</div>
+          <div>
+            <div class="chapter-title">L'électricité</div>
+            <div class="chapter-subtitle">Conducteurs, effets, circuit série vs parallèle</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch3_2">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch3_2">
+        <div class="inner-tabs">
+          <button class="inner-tab active-2" onclick="switchInner('ch3_2','synth','2')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch3_2','quiz','2')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch3_2">
+          <div class="synth">
+            <div class="synth-block c2">
+              <h3>Conducteurs électriques</h3>
+              <table>
+                <tr><th>Bon conducteur</th><th>Mauvais conducteur (isolant)</th></tr>
+                <tr><td>Laisse passer le courant électrique</td><td>Ne laisse pas passer le courant</td></tr>
+                <tr><td>Métaux, eau salée…</td><td>Plastique, caoutchouc, bois sec…</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Effets de l'électricité (5)</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+                <span class="tag tag-orange">Calorifique (chaleur)</span>
+                <span class="tag tag-blue">Mécanique</span>
+                <span class="tag tag-gold">Lumineux</span>
+                <span class="tag tag-pink">Magnétique</span>
+                <span class="tag tag-green">Chimique</span>
+              </div>
+            </div>
+            <div class="synth-block">
+              <h3>Circuit électrique simple</h3>
+              <ul style="margin-left:16px;line-height:2">
+                <li>Générateur (pile, batterie…)</li>
+                <li>Interrupteur (ouvert ou fermé)</li>
+                <li>Récepteur (lampe, moteur…)</li>
+                <li>Fils</li>
+              </ul>
+            </div>
+            <div class="synth-block c2">
+              <h3>Série vs Parallèle</h3>
+              <table>
+                <tr><th>Série</th><th>Parallèle</th></tr>
+                <tr><td>Un seul chemin pour le courant</td><td>Plusieurs chemins</td></tr>
+                <tr><td>Si un dipôle tombe en panne → <strong>tout s'arrête</strong> (circuit ouvert)</td><td>Si un dipôle tombe en panne → <strong>les autres continuent</strong> (circuit fermé)</td></tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch3_2">
+          <div id="qarea_ch3_2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 4 Y2 -->
+    <div class="chapter" id="ch4_2">
+      <div class="chapter-head" onclick="toggleChapter('ch4_2','2')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-2">🌡️</div>
+          <div>
+            <div class="chapter-title">La pression</div>
+            <div class="chapter-subtitle">Formule, variables, pression atmosphérique</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch4_2">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch4_2">
+        <div class="inner-tabs">
+          <button class="inner-tab active-2" onclick="switchInner('ch4_2','synth','2')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch4_2','quiz','2')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch4_2">
+          <div class="synth">
+            <div class="synth-block c2">
+              <h3>La pression (p)</h3>
+              <p><strong>Définition :</strong> rapport entre la force et la surface sur laquelle elle agit.</p>
+              <div class="formula-box">p = F / S    (Pa ou N/m²)</div>
+              <table style="margin-top:10px">
+                <tr><th>Si F constante</th><th>Si S constante</th></tr>
+                <tr><td>S ↑ → p ↓ &nbsp;(inversement proportionnel)</td><td>F ↑ → p ↑ &nbsp;(directement proportionnel)</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Pression atmosphérique</h3>
+              <ul style="margin-left:16px;line-height:2">
+                <li>Pression exercée par l'air sur <strong>tous les corps, dans tous les sens</strong></li>
+                <li>Valeur normale : <strong>1013 hPa</strong></li>
+                <li>Instrument : <strong>baromètre</strong></li>
+                <li>Unité : Pa ou hPa (hectopascal)</li>
+                <li>Application : <strong>météo</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch4_2">
+          <div id="qarea_ch4_2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 5 Y2 -->
+    <div class="chapter" id="ch5_2">
+      <div class="chapter-head" onclick="toggleChapter('ch5_2','2')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-2">⚖️</div>
+          <div>
+            <div class="chapter-title">Poids et masse</div>
+            <div class="chapter-subtitle">Newton, kilogramme, formule P = m·G</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch5_2">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch5_2">
+        <div class="inner-tabs">
+          <button class="inner-tab active-2" onclick="switchInner('ch5_2','synth','2')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch5_2','quiz','2')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch5_2">
+          <div class="synth">
+            <div class="synth-block c2">
+              <h3>Poids vs Masse</h3>
+              <table>
+                <tr><th></th><th>Poids (P)</th><th>Masse (m)</th></tr>
+                <tr><td>Unité</td><td>Newton (N)</td><td>Kilogramme (kg)</td></tr>
+                <tr><td>Instrument</td><td>Dynamomètre</td><td>Balance</td></tr>
+                <tr><td>Définition</td><td>Force d'attraction gravitationnelle</td><td>Quantité de matière</td></tr>
+                <tr><td>Varie selon lieu ?</td><td>✅ Oui</td><td>❌ Non</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>Formule et valeurs</h3>
+              <div class="formula-box">P = m × G</div>
+              <table style="margin-top:10px">
+                <tr><th>Astre</th><th>G (N/kg)</th><th>Formule</th></tr>
+                <tr><td>Terre</td><td>9,81</td><td>P = m × 9,81</td></tr>
+                <tr><td>Lune</td><td>1,6</td><td>P = m × 1,6</td></tr>
+              </table>
+            </div>
+            <div class="synth-block c2">
+              <h3>Facteurs influençant le poids</h3>
+              <ul style="margin-left:16px;line-height:2.2">
+                <li>Masse de l'astre ↑ → poids ↑</li>
+                <li>Latitude ↑ → poids ↑</li>
+                <li>Altitude ↑ → poids ↓</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch5_2">
+          <div id="qarea_ch5_2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CH 6 Y2 -->
+    <div class="chapter" id="ch6_2">
+      <div class="chapter-head" onclick="toggleChapter('ch6_2','2')">
+        <div class="chapter-head-left">
+          <div class="ch-icon ch-icon-2">🏹</div>
+          <div>
+            <div class="chapter-title">La force (F)</div>
+            <div class="chapter-subtitle">Définition, vecteur, effets, actions réciproques</div>
+          </div>
+        </div>
+        <span class="ch-chevron" id="chev_ch6_2">▼</span>
+      </div>
+      <div class="chapter-body" id="body_ch6_2">
+        <div class="inner-tabs">
+          <button class="inner-tab active-2" onclick="switchInner('ch6_2','synth','2')">📖 Synthèse</button>
+          <button class="inner-tab" onclick="switchInner('ch6_2','quiz','2')">🎯 Quiz</button>
+        </div>
+        <div class="inner-panel show" id="synth_ch6_2">
+          <div class="synth">
+            <div class="synth-block c2">
+              <h3>La force (F)</h3>
+              <p><strong>Définition :</strong> action capable de <strong>déformer</strong> un corps et/ou de <strong>modifier son état de repos ou de mouvement</strong>.</p>
+              <table style="margin-top:10px">
+                <tr><th>Unité (SI)</th><th>Instrument</th></tr>
+                <tr><td>Newton (N)</td><td>Dynamomètre</td></tr>
+              </table>
+            </div>
+            <div class="synth-block cgold">
+              <h3>4 effets observables</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+                <span class="tag tag-orange">Déformation temporaire</span>
+                <span class="tag tag-pink">Déformation durable</span>
+                <span class="tag tag-blue">Changement de vitesse</span>
+                <span class="tag tag-green">Changement de direction</span>
+              </div>
+            </div>
+            <div class="synth-block">
+              <h3>Le vecteur — 4 caractéristiques</h3>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px">
+                <span class="tag tag-blue">Point d'application</span>
+                <span class="tag tag-green">Droite d'action</span>
+                <span class="tag tag-gold">Sens</span>
+                <span class="tag tag-pink">Intensité</span>
+              </div>
+            </div>
+            <div class="synth-block c2">
+              <h3>Actions réciproques</h3>
+              <p>Une force n'existe <strong>jamais seule</strong>. Si A exerce une force sur B, alors B exerce une force sur A.</p>
+              <p style="margin-top:8px">Ces 2 forces ont :</p>
+              <ul style="margin-left:16px;line-height:2">
+                <li>Même <strong>intensité</strong></li>
+                <li>Même <strong>direction</strong></li>
+                <li><strong>Sens opposés</strong></li>
+                <li>Points d'application <strong>différents</strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inner-panel" id="quiz_ch6_2">
+          <div id="qarea_ch6_2"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /chapter-list y2 -->
+</div><!-- /y2 -->
+
+</div><!-- /main -->
+
+<script>
+// ── DATA: Questions par chapitre ──────────────────────────────────────────────
+const QUIZZES = {
+  ch1_1: [
+    { q:"Quel est le rôle principal du système circulatoire ?", opts:["Digérer les aliments","Transporter O₂, nutriments et déchets dans le sang","Filtrer le dioxyde de carbone","Produire des cellules"], ans:1, exp:"Le cœur est une pompe et le sang un transporteur qui distribue tous les éléments." },
+    { q:"Par quel organe du système digestif sont absorbés les nutriments ?", opts:["L'estomac","Le foie","L'intestin grêle","Le gros intestin"], ans:2, exp:"L'intestin grêle est le lieu d'absorption des nutriments après dégradation." },
+    { q:"Que libèrent les alvéoles pulmonaires ?", opts:["O₂ uniquement","CO₂ et vapeur d'eau","Nutriments et O₂","Déchets non-gazeux"], ans:1, exp:"Les échanges gazeux dans les alvéoles : entrée de l'O₂, évacuation du CO₂ et de la vapeur d'eau." },
+    { q:"Comment est organisé un organisme (du plus grand au plus petit) ?", opts:["Cellule → Tissu → Organe → Système","Système → Organe → Tissu → Cellule","Organe → Système → Tissu → Cellule","Tissu → Cellule → Organe → Système"], ans:1, exp:"Organisme → Systèmes → Organes → Tissus → Cellules." },
+    { q:"Quel système filtre les déchets non-gazeux du sang ?", opts:["Système digestif","Système respiratoire","Système circulatoire","Système urinaire"], ans:3, exp:"Les reins (système urinaire) filtrent le sang et éliminent les déchets non-gazeux." },
+  ],
+  ch2_1: [
+    { q:"Qu'est-ce qu'un écosystème ?", opts:["Un ensemble d'êtres vivants seulement","L'ensemble des espèces et leurs relations avec leur milieu","Un milieu physique sans vivants","Un réseau de chaînes alimentaires"], ans:1, exp:"Un écosystème = toutes les espèces d'un milieu + les relations entre elles et avec leur environnement." },
+    { q:"Laquelle de ces propositions est une caractéristique des vivants ?", opts:["Avoir une forme régulière","Se nourrir, respirer, se reproduire…","Être composé de roche","Ne pas réagir aux stimuli"], ans:1, exp:"Les 6 caractéristiques : se nourrir, respirer, circuler, se reproduire, réagir aux stimuli, croître." },
+    { q:"Un stimulus est…", opts:["Un nutriment","Un facteur qui provoque un changement de comportement","Un type de cellule","Un déchet gazeux"], ans:1, exp:"Un stimulus est un facteur qui provoque un changement de comportement chez les êtres vivants." },
+    { q:"Lequel de ces éléments est un non-vivant de type 'composante minérale' ?", opts:["Un arbre","Une bactérie","Un caillou","Un insecte"], ans:2, exp:"Les composantes minérales = roches, cailloux, eau, air… Ce sont des éléments non vivants naturels." },
+    { q:"Les organes de sens permettent de recevoir quel type de stimuli ?", opts:["Modifications du milieu physique uniquement","Signaux chimiques uniquement","Toutes sortes de stimuli (ouïe, vue, odorat, toucher, goût)","Uniquement la lumière"], ans:2, exp:"Les organes de sens (ouïe, vue, odorat, toucher, goût) sont les récepteurs de stimuli." },
+  ],
+  ch3_1: [
+    { q:"Un organisme autotrophe…", opts:["Se nourrit d'autres animaux","Utilise la matière minérale pour se nourrir","Décompose la matière morte","Se nourrit de végétaux uniquement"], ans:1, exp:"Autotrophe = producteur, il utilise la matière minérale (sels, eau, CO₂) pour fabriquer sa matière organique." },
+    { q:"Un zoophage est un animal qui…", opts:["Se nourrit exclusivement de végétaux","Se nourrit exclusivement d'animaux","Se nourrit de végétaux et d'animaux","Décompose la matière organique"], ans:1, exp:"Zoophage = se nourrit exclusivement d'aliments d'origine animale. Ex: requin, lynx." },
+    { q:"Les décomposeurs transforment…", opts:["La matière minérale en matière organique","La matière organique vivante en énergie","La matière organique morte en matière minérale","L'eau en oxygène"], ans:2, exp:"Les décomposeurs transforment la matière organique morte en matière minérale." },
+    { q:"Le sanglier est un exemple de…", opts:["Phytophage","Zoophage","Omnivore","Autotrophe"], ans:2, exp:"Le sanglier est omnivore : il mange des végétaux ET des animaux." },
+    { q:"Un organisme hétérotrophe se nourrit…", opts:["Uniquement de lumière solaire","De matière organique (vivante ou morte)","De matière minérale uniquement","De CO₂ et d'eau"], ans:1, exp:"Hétérotrophe = consommateurs + décomposeurs, ils se nourrissent de matière organique." },
+  ],
+  ch4_1: [
+    { q:"Dans une chaîne alimentaire, le producteur est toujours…", opts:["Un animal carnivore","Un végétal","Un décomposeur","Un omnivore"], ans:1, exp:"Le producteur (P) est toujours un végétal, premier maillon d'une chaîne alimentaire." },
+    { q:"Un réseau trophique est…", opts:["Une chaîne alimentaire simple","Un ensemble de chaînes alimentaires avec au moins un maillon commun","Une liste de tous les végétaux","Une carte des écosystèmes"], ans:1, exp:"Réseau trophique = ensemble de chaînes alimentaires ayant au moins un maillon commun." },
+    { q:"Si une espèce disparaît d'un écosystème, que se passe-t-il ?", opts:["Rien, l'écosystème s'adapte facilement","Rupture d'équilibre → perturbations en cascade","Seulement l'espèce prédatrice est touchée","L'espèce est remplacée automatiquement"], ans:1, exp:"Dans un écosystème, les liens sont forts : la disparition d'une espèce peut entraîner d'autres disparitions." },
+    { q:"Les vertébrés comprennent ces classes…", opts:["Insectes, mollusques, crustacés","Mammifères, oiseaux, amphibiens, poissons, reptiles","Mammifères, insectes, poissons","Oiseaux, reptiles, araignées, crustacés"], ans:1, exp:"Les 5 classes de vertébrés : mammifères, oiseaux, amphibiens, poissons, reptiles." },
+    { q:"C1 dans une chaîne alimentaire est…", opts:["Un producteur végétal","Un phytophage ou omnivore","Un zoophage","Un décomposeur"], ans:1, exp:"C1 = premier consommateur = phytophage ou omnivore (mange des végétaux)." },
+  ],
+  ch5_1: [
+    { q:"Quel type de respiration utilisent les insectes ?", opts:["Pulmonaire","Trachéenne","Branchiale","Cutanée"], ans:1, exp:"Les insectes respirent par trachées (tuyaux internes) via des stigmates à la surface du corps." },
+    { q:"La respiration branchiale concerne…", opts:["Les mammifères","Les insectes","Les poissons et crustacés","Les vers de terre"], ans:2, exp:"La respiration branchiale (via les branchies) est utilisée par les poissons, crevettes, en milieu aquatique." },
+    { q:"Quel est le milieu de ventilation pour la respiration pulmonaire ?", opts:["L'eau","L'air","La terre","Le sang"], ans:1, exp:"Respiration pulmonaire = milieu de ventilation : air." },
+    { q:"La méduse respire par…", opts:["Branchies","Poumons","Trachées","Diffusion"], ans:3, exp:"Les méduses respirent par diffusion directe à travers leur corps (échanges gazeux simples)." },
+    { q:"La respiration cutanée peut avoir lieu dans quel milieu ?", opts:["Air uniquement","Eau uniquement","Air ET eau","Ni air ni eau"], ans:2, exp:"La respiration cutanée (via la peau) peut se faire en milieu terrestre ET aquatique. Ex: grenouille, ver de terre." },
+  ],
+  ch6_1: [
+    { q:"Dans une circulation fermée, le sang est…", opts:["Libre dans la cavité du corps","Entièrement canalisé dans des vaisseaux","Mélangé avec l'air","Absent du corps"], ans:1, exp:"Circulation fermée = le sang est entièrement canalisé dans des vaisseaux sanguins." },
+    { q:"Une circulation simple signifie que le sang passe par le cœur…", opts:["0 fois","1 fois par circuit complet","2 fois par circuit complet","3 fois par circuit complet"], ans:1, exp:"Circulation simple = le sang passe 1× par le cœur pour effectuer un circuit complet." },
+    { q:"Dans une circulation complète, les sangs riches en O₂ et CO₂…", opts:["Se mélangent","Ne se mélangent pas","Sont identiques","Circulent dans le même sens"], ans:1, exp:"Circulation complète = sang riche en O₂ et sang riche en CO₂ ne se mélangent PAS." },
+    { q:"La circulation ouverte (lacunaire) signifie que…", opts:["Le sang n'existe pas","Les vaisseaux sont interrompus par des lacunes","Le sang circule très vite","Le cœur est absent"], ans:1, exp:"Circulation ouverte = vaisseaux interrompus par des lacunes (espaces libres)." },
+    { q:"La circulation double signifie que le sang passe par le cœur…", opts:["1 fois","2 fois","3 fois","Jamais"], ans:1, exp:"Circulation double = le sang passe 2× par le cœur pour effectuer un circuit complet." },
+  ],
+  ch7_1: [
+    { q:"Dans quel état la forme ET le volume sont-ils variables ?", opts:["Solide","Liquide","Gazeux","Aucun"], ans:2, exp:"À l'état gazeux, le volume ET la forme sont variables." },
+    { q:"Comment bougent les molécules dans un solide ?", opts:["Roulent les unes sur les autres","Sont très agitées","Vibrent sur elles-mêmes","Se déplacent librement"], ans:2, exp:"Dans un solide, les molécules vibrent sur elles-mêmes (proches, fortement liées, ordonnées)." },
+    { q:"Quelle propriété est exclusive aux gaz ?", opts:["Volume invariable","Forme invariable","Compressible, extensible et élastique","Surface libre plane"], ans:2, exp:"Les gaz sont les seuls à être compressibles, extensibles et élastiques." },
+    { q:"La surface libre d'un liquide est toujours…", opts:["Courbe","Plane et horizontale (⊥ au fil à plomb)","En pente","Variable selon le récipient"], ans:1, exp:"La surface libre d'un liquide est toujours plane et horizontale, perpendiculaire au fil à plomb." },
+    { q:"Les molécules des liquides sont…", opts:["Fortement liées et ordonnées","Éloignées et non liées","Proches, faiblement liées et désordonnées","Immobiles"], ans:2, exp:"Dans un liquide, les molécules sont proches, faiblement liées et désordonnées — elles roulent les unes sur les autres." },
+  ],
+  ch8_1: [
+    { q:"Quel changement d'état correspond à Solide → Liquide ?", opts:["Solidification","Vaporisation","Fusion","Sublimation"], ans:2, exp:"Fusion = passage de l'état solide à l'état liquide (apport de chaleur)." },
+    { q:"La sublimation correspond à…", opts:["Liquide → Gaz","Solide → Gaz","Gaz → Solide","Gaz → Liquide"], ans:1, exp:"Sublimation = passage direct de l'état solide à l'état gazeux (apport de chaleur)." },
+    { q:"Lors d'un changement d'état, la masse du corps pur est-elle conservée ?", opts:["Non, elle diminue","Non, elle augmente","Oui, elle est conservée","Ça dépend du changement"], ans:2, exp:"Dans un système fermé, la masse est toujours conservée (même nombre de molécules)." },
+    { q:"Un corps pur en cours de changement d'état présente…", opts:["Une température croissante","Une température décroissante","Un palier (température constante)","Aucun changement de température"], ans:2, exp:"Corps pur : température constante pendant le changement d'état = présence d'un palier." },
+    { q:"Plus la quantité de matière est importante, le changement d'état est…", opts:["Plus rapide","Plus lent","Identique","Impossible"], ans:1, exp:"Plus la quantité de matière est grande, plus le changement d'état est lent." },
+  ],
+  ch9_1: [
+    { q:"Un mélange homogène est un mélange dont on…", opts:["Peut voir tous les constituants","Ne peut pas distinguer les constituants à l'œil nu","Peut séparer par filtration","Voit deux phases distinctes"], ans:1, exp:"Homogène = constituants non distinguables à l'œil nu. Ex: eau + sel." },
+    { q:"Quelle méthode sépare un mélange hétérogène solide-liquide ?", opts:["Distillation","Cristallisation","Filtration","Évaporation"], ans:2, exp:"La filtration sépare un solide d'un liquide dans un mélange hétérogène." },
+    { q:"Dans une solution sucrée, le sucre est…", opts:["Le solvant","Le soluté","La solution","Un mélange hétérogène"], ans:1, exp:"Le soluté est la substance qui se dissout. Ici, le sucre se dissout dans l'eau." },
+    { q:"Eau + huile forment un mélange…", opts:["Homogène (miscibles)","Hétérogène (non miscibles)","Une solution","Un corps pur"], ans:1, exp:"L'eau et l'huile ne se mélangent pas = non miscibles = mélange hétérogène." },
+    { q:"Qu'est-ce qu'une solution saturée ?", opts:["Une solution très pure","Une solution où on ne peut plus dissoudre de soluté supplémentaire","Une solution gazeuse","Une solution à haute température"], ans:1, exp:"Solution saturée = le solvant ne peut plus dissoudre davantage de soluté → dépôt au fond." },
+  ],
+  ch10_1: [
+    { q:"Quelle est la formule de la masse volumique ?", opts:["φ = V / m","φ = m × V","φ = m / V","φ = m + V"], ans:2, exp:"φ = m / V (masse volumique = masse divisée par volume, exprimée en kg/m³)." },
+    { q:"La masse volumique de l'eau est…", opts:["100 kg/m³","1000 kg/m³","10 000 kg/m³","1 kg/m³"], ans:1, exp:"φ eau = 1000 kg/m³ (valeur à retenir !)." },
+    { q:"La conduction thermique se produit dans…", opts:["Les gaz uniquement","Les liquides en mouvement","Les solides, sans mouvement de matière","Le vide"], ans:2, exp:"Conduction = transfert dans les solides, sans mouvement de matière, avec contact." },
+    { q:"Quelle est la différence entre chaleur et température ?", opts:["Ce sont des synonymes","La chaleur se mesure en °C, la température en joules","La chaleur est un transfert d'énergie, la température mesure l'agitation des molécules","La température varie, la chaleur non"], ans:2, exp:"Chaleur = énergie qui se transfère. Température = mesure du degré d'agitation moléculaire (°C)." },
+    { q:"Quand un gaz est chauffé, son volume…", opts:["Diminue (contraction)","Ne change pas","Augmente (dilatation)","Devient solide"], ans:2, exp:"Gaz chauffé → dilatation → volume augmente → masse volumique diminue." },
+  ],
+  ch1_2: [
+    { q:"Quand la température de l'eau augmente, la quantité d'O₂ dissous…", opts:["Augmente","Reste stable","Diminue","Double"], ans:2, exp:"Plus l'eau est chaude, moins elle peut dissoudre d'O₂." },
+    { q:"Comment l'agitation de l'eau augmente-t-elle l'O₂ dissous ?", opts:["En réchauffant l'eau","En augmentant la surface d'échange avec l'air","En éliminant le CO₂","En activant la photosynthèse"], ans:1, exp:"L'agitation augmente la surface de contact eau/air, donc plus d'O₂ peut se dissoudre." },
+    { q:"Quelle est la composition approximative de l'air ?", opts:["50% azote, 50% oxygène","78% azote, 21% oxygène, 0,03% CO₂","90% oxygène, 10% azote","21% azote, 78% oxygène"], ans:1, exp:"Air : 78% N₂, 21% O₂, 0,03% CO₂, autres gaz, vapeur d'eau." },
+    { q:"Les végétaux augmentent l'O₂ dissous dans l'eau grâce à…", opts:["La respiration","La transpiration","La photosynthèse","La fermentation"], ans:2, exp:"La photosynthèse produit de l'O₂ qui se dissout dans l'eau. Plus de lumière → plus d'O₂." },
+    { q:"Que se passe-t-il quand l'eau est saturée en O₂ ?", opts:["L'eau devient toxique","L'excès d'O₂ repart dans l'air","Les poissons meurent","L'O₂ se transforme en CO₂"], ans:1, exp:"Eau saturée → surplus d'O₂ retourne dans l'air atmosphérique. Échanges constants air↔eau." },
+  ],
+  ch2_2: [
+    { q:"La reproduction sexuée implique…", opts:["Des spores","Des cellules reproductrices (gamètes)","La division du corps","Le bourgeonnement"], ans:1, exp:"La reproduction sexuée implique toujours des gamètes (cellules reproductrices)." },
+    { q:"La scissiparité est un mode de reproduction…", opts:["Sexuée","Asexuée","Interne","Externe"], ans:1, exp:"La scissiparité est un mode de reproduction asexuée (pas de gamètes)." },
+    { q:"La fécondation interne se produit…", opts:["Dans l'eau","À l'extérieur du corps","À l'intérieur du corps d'un parent","Dans le sol"], ans:2, exp:"Fécondation interne = rencontre des gamètes à l'intérieur du corps d'un des parents (terrestre)." },
+    { q:"La viviparité correspond à…", opts:["Des œufs pondus à l'extérieur","Un développement à l'intérieur du corps maternel (naissance vivante)","Des œufs incubés dans le corps","Un mode de reproduction asexuée"], ans:1, exp:"Viviparité = le petit se développe à l'intérieur du corps de la mère et naît vivant." },
+    { q:"Lors d'un accouchement, la délivrance correspond à…", opts:["La naissance du bébé","L'expulsion du placenta","Le début du travail","La fécondation"], ans:1, exp:"La délivrance = expulsion du placenta, dernière étape de l'accouchement." },
+  ],
+  ch3_2: [
+    { q:"Dans un circuit en série, si une ampoule tombe en panne…", opts:["Les autres continuent de fonctionner","Tout le circuit s'arrête","Seul le générateur s'arrête","Rien ne change"], ans:1, exp:"Série = un seul chemin → si un dipôle est en panne, le circuit est ouvert, tout s'arrête." },
+    { q:"Un conducteur électrique est…", opts:["Une matière qui laisse passer la chaleur","Une matière qui laisse passer le courant électrique","Une matière qui bloque l'électricité","Un type de générateur"], ans:1, exp:"Conducteur électrique = laisse passer le courant. Ex: métaux." },
+    { q:"Quels sont les 4 composants d'un circuit simple ?", opts:["Générateur, fusible, résistance, fils","Générateur, interrupteur, récepteur, fils","Pile, ampoule, résistance, interrupteur","Batterie, condensateur, résistance, fils"], ans:1, exp:"Circuit simple : générateur + interrupteur + récepteur + fils." },
+    { q:"L'effet lumineux de l'électricité correspond à…", opts:["Un moteur qui tourne","Une ampoule qui s'allume","Un métal qui chauffe","Un aimant qui attire"], ans:1, exp:"L'effet lumineux = production de lumière. Ex: une ampoule." },
+    { q:"Dans un circuit en parallèle, si une ampoule tombe en panne…", opts:["Tout le circuit s'arrête","Les autres continuent car leur circuit reste fermé","Seul le générateur s'éteint","Le circuit devient un circuit en série"], ans:1, exp:"Parallèle = plusieurs chemins → panne d'un dipôle n'affecte pas les autres." },
+  ],
+  ch4_2: [
+    { q:"Quelle est la formule de la pression ?", opts:["p = F × S","p = S / F","p = F / S","p = F + S"], ans:2, exp:"p = F / S (pression = force divisée par surface). Unité : Pascal (Pa)." },
+    { q:"Si la surface augmente et la force reste constante, la pression…", opts:["Augmente","Reste identique","Diminue","Double"], ans:2, exp:"Grandeurs inversement proportionnelles : S ↑ avec F constante → p ↓." },
+    { q:"La pression atmosphérique normale est de…", opts:["101,3 Pa","1013 hPa","10 000 Pa","100 hPa"], ans:1, exp:"Valeur normale de la pression atmosphérique : 1013 hPa (hectopascals)." },
+    { q:"Quel instrument mesure la pression atmosphérique ?", opts:["Thermomètre","Baromètre","Dynamomètre","Manomètre"], ans:1, exp:"Le baromètre mesure la pression atmosphérique." },
+    { q:"La pression atmosphérique s'exerce…", opts:["Uniquement vers le bas","Sur tous les corps, dans tous les sens","Uniquement à haute altitude","Seulement sur les liquides"], ans:1, exp:"La pression atmosphérique s'exerce sur tous les corps, sur toutes les surfaces, dans tous les sens." },
+  ],
+  ch5_2: [
+    { q:"Quelle est l'unité du poids ?", opts:["Kilogramme (kg)","Newton (N)","Pascal (Pa)","Joule (J)"], ans:1, exp:"Le poids se mesure en Newton (N), avec un dynamomètre." },
+    { q:"La masse d'un objet varie-t-elle selon l'endroit où on se trouve ?", opts:["Oui, elle varie","Non, elle reste constante","Oui, mais seulement en altitude","Oui, selon la latitude"], ans:1, exp:"La masse est une quantité de matière, elle ne varie JAMAIS selon le lieu." },
+    { q:"Quel est le poids d'un objet de 10 kg sur Terre ?", opts:["10 N","16 N","98,1 N","100 N"], ans:2, exp:"P = m × G = 10 × 9,81 = 98,1 N (arrondi à ~100N souvent)." },
+    { q:"Quel est l'instrument de mesure du poids ?", opts:["Balance","Baromètre","Dynamomètre","Thermomètre"], ans:2, exp:"Le poids se mesure avec un dynamomètre (force d'attraction gravitationnelle)." },
+    { q:"Si l'altitude augmente, le poids d'un objet…", opts:["Augmente","Reste identique","Diminue","Double"], ans:2, exp:"À mesure que l'altitude augmente, on s'éloigne du centre de la Terre → le poids diminue." },
+  ],
+  ch6_2: [
+    { q:"Combien de caractéristiques définissent un vecteur-force ?", opts:["2","3","4","5"], ans:2, exp:"Un vecteur est défini par 4 caractéristiques : point d'application, droite d'action, sens, intensité." },
+    { q:"Selon le principe des actions réciproques, si A pousse B…", opts:["Seul A exerce une force","B pousse aussi A avec une force de même intensité mais de sens opposé","B ne réagit pas","Les deux forces ont le même sens"], ans:1, exp:"Actions réciproques : A agit sur B ET B agit sur A. Même intensité, même direction, sens opposés." },
+    { q:"Quel est l'effet observable quand une balle de tennis rebondit ?", opts:["Déformation durable","Changement de direction","Changement de température","Déformation temporaire uniquement"], ans:1, exp:"Quand une balle rebondit, sa direction change → effet de changement de direction." },
+    { q:"L'unité de la force est…", opts:["Le kilogramme","Le pascal","Le newton","Le joule"], ans:2, exp:"La force se mesure en Newton (N), avec un dynamomètre." },
+    { q:"Une déformation temporaire signifie que…", opts:["L'objet est détruit","L'objet reprend sa forme initiale","L'objet garde la nouvelle forme","L'objet change de masse"], ans:1, exp:"Déformation temporaire = l'objet reprend sa forme initiale après la force. Ex: ressort." },
+  ],
+};
+
+// ── QUIZ ENGINE ───────────────────────────────────────────────────────────────
+const quizState = {};
+
+function initQuiz(chId) {
+  if (quizState[chId]) return;
+  quizState[chId] = { cur: 0, score: 0, answered: false };
+  renderQuestion(chId);
+}
+
+function renderQuestion(chId) {
+  const qs = QUIZZES[chId];
+  const st = quizState[chId];
+  const el = document.getElementById('qarea_' + chId);
+  if (!qs || !el) return;
+
+  const year = chId.endsWith('_1') ? '1' : '2';
+  const accentClass = year === '1' ? 'pb-1' : 'pb-2';
+  const btnClass = year === '1' ? 'btn-1' : 'btn-2';
+  const innerClass = year === '1' ? 'active-1' : 'active-2';
+
+  if (st.cur >= qs.length) {
+    renderScore(chId, year, btnClass);
+    return;
+  }
+
+  const q = qs[st.cur];
+  const pct = Math.round((st.cur / qs.length) * 100);
+
+  el.innerHTML = `
+    <div class="quiz-progress">
+      <span>${st.cur + 1} / ${qs.length}</span>
+      <div class="prog-bar-wrap"><div class="prog-bar ${accentClass}" style="width:${pct}%"></div></div>
+      <span>⭐ ${st.score}</span>
+    </div>
+    <div class="quiz-card">
+      <div class="quiz-q">
+        <span class="qnum">Question ${st.cur + 1}</span>
+        ${q.q}
+      </div>
+      <div class="options-grid">
+        ${q.opts.map((o, i) => `
+          <button class="opt-btn" onclick="answer('${chId}', ${i})">${o}</button>
+        `).join('')}
+      </div>
+      <div class="quiz-feedback" id="fb_${chId}"></div>
+    </div>
+    <div class="quiz-nav">
+      <span></span>
+      <button class="btn ${btnClass}" id="next_${chId}" style="display:none" onclick="nextQ('${chId}')">Suivant →</button>
+    </div>
+  `;
+}
+
+function answer(chId, idx) {
+  const st = quizState[chId];
+  const q = QUIZZES[chId][st.cur];
+  if (st.answered) return;
+  st.answered = true;
+
+  const btns = document.querySelectorAll(`#qarea_${chId} .opt-btn`);
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('correct');
+    else if (i === idx && idx !== q.ans) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('fb_' + chId);
+  if (idx === q.ans) {
+    st.score++;
+    fb.textContent = '✅  Correct ! ' + q.exp;
+    fb.className = 'quiz-feedback show ok';
+  } else {
+    fb.textContent = '❌  Incorrect. ' + q.exp;
+    fb.className = 'quiz-feedback show ko';
+  }
+
+  document.getElementById('next_' + chId).style.display = 'block';
+}
+
+function nextQ(chId) {
+  const st = quizState[chId];
+  st.cur++;
+  st.answered = false;
+  renderQuestion(chId);
+}
+
+function renderScore(chId, year, btnClass) {
+  const st = quizState[chId];
+  const total = QUIZZES[chId].length;
+  const pct = Math.round((st.score / total) * 100);
+  let stars = pct >= 80 ? '🌟🌟🌟' : pct >= 60 ? '⭐⭐' : '⭐';
+  let msg = pct >= 80 ? 'Excellent travail !' : pct >= 60 ? 'Bien joué, continue !' : 'Continue à réviser !';
+
+  document.getElementById('qarea_' + chId).innerHTML = `
+    <div class="score-panel show">
+      <div class="score-stars">${stars}</div>
+      <div class="score-big">${st.score} / ${total}</div>
+      <div class="score-sub">${pct}% — ${msg}</div>
+      <button class="btn ${btnClass}" onclick="resetQuiz('${chId}')">🔄 Recommencer</button>
+    </div>
+  `;
+}
+
+function resetQuiz(chId) {
+  quizState[chId] = { cur: 0, score: 0, answered: false };
+  renderQuestion(chId);
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────────────────────
+function toggleChapter(id, year) {
+  const body = document.getElementById('body_' + id);
+  const chev = document.getElementById('chev_' + id);
+  const card = document.getElementById(id);
+  const isOpen = body.classList.contains('show');
+
+  body.classList.toggle('show', !isOpen);
+  chev.classList.toggle('rotated', !isOpen);
+  card.classList.remove('open-1', 'open-2');
+  if (!isOpen) card.classList.add('open-' + year);
+}
+
+function switchInner(chId, panel, year) {
+  const synth = document.getElementById('synth_' + chId);
+  const quiz  = document.getElementById('quiz_' + chId);
+  const tabs  = document.querySelectorAll(`#body_${chId} .inner-tab`);
+
+  synth.classList.toggle('show', panel === 'synth');
+  quiz.classList.toggle('show',  panel === 'quiz');
+
+  tabs.forEach((t, i) => {
+    t.classList.remove('active-1', 'active-2');
+    if ((i === 0 && panel === 'synth') || (i === 1 && panel === 'quiz')) {
+      t.classList.add('active-' + year);
+    }
+  });
+
+  if (panel === 'quiz') initQuiz(chId);
+}
+
+function showYear(year, btn) {
+  document.getElementById('y1').classList.toggle('hidden', year !== 'y1');
+  document.getElementById('y2').classList.toggle('hidden', year !== 'y2');
+
+  document.querySelectorAll('.nav-tabs .tab-btn').forEach(b => {
+    b.classList.remove('active-1', 'active-2');
+  });
+  btn.classList.add(year === 'y1' ? 'active-1' : 'active-2');
+}
+</script>
+</body>
+</html>
