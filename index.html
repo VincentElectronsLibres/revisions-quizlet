@@ -14,11 +14,11 @@
       --border: rgba(255,255,255,0.08);
       --text: #fffffe;
       --muted: #a7a9be;
-      --accent1: #ff8906; /* orange */
-      --accent2: #f25f4c; /* coral */
-      --accent3: #e53170; /* pink */
-      --accent4: #3da9fc; /* blue */
-      --accent5: #7bed9f; /* green */
+      --accent1: #ff8906;
+      --accent2: #f25f4c;
+      --accent3: #e53170;
+      --accent4: #3da9fc;
+      --accent5: #7bed9f;
       --font-display: 'Fraunces', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
       --radius: 1.2rem;
@@ -143,7 +143,6 @@
       display: flex; align-items: center; gap: 0.75rem;
       text-decoration: none; color: inherit;
     }
-
     .brand-text strong { display: block; font-size: 0.9rem; font-weight: 700; }
     .brand-text span { display: block; font-size: 0.75rem; color: var(--muted); }
     .header-right { display: flex; gap: 0.5rem; align-items: center; }
@@ -237,7 +236,6 @@
     }
     .subject-card:hover::before { opacity: 1; }
 
-    /* Per-subject colors */
     .card-anglais { --c: var(--accent4); }
     .card-anglais::before { background: radial-gradient(ellipse at top left, rgba(61,169,252,0.15), transparent 70%); }
     .card-anglais:hover { border-color: rgba(61,169,252,0.4); box-shadow: 0 20px 60px rgba(61,169,252,0.15); }
@@ -352,9 +350,7 @@
     .pdf-btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
     /* Search */
-    .search-wrap {
-      position: relative; margin-bottom: 2rem;
-    }
+    .search-wrap { position: relative; margin-bottom: 2rem; }
     .search-icon {
       position: absolute; left: 1.1rem; top: 50%; transform: translateY(-50%);
       color: var(--muted); pointer-events: none;
@@ -431,6 +427,18 @@
       align-self: flex-start;
     }
     .chapter-link:hover { background: rgba(61,169,252,0.2); border-color: rgba(61,169,252,0.4); }
+
+    /* Sciences iframe */
+    .sciences-iframe-wrap {
+      width: 100%;
+      height: calc(100vh - 70px);
+    }
+    .sciences-iframe-wrap iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
 
     /* Coming soon page */
     .coming-soon-page {
@@ -566,18 +574,17 @@
             <span class="coming-soon-badge">Prochainement</span>
           </div>
 
-          <!-- SCIENCES -->
+          <!-- SCIENCES — ACTIF -->
           <div class="subject-card card-sciences fade-up delay-5" onclick="showPage('sciences')">
             <div class="subject-icon">🔬</div>
             <h2 class="subject-title">Sciences</h2>
-            <p class="subject-desc">Biologie, chimie, physique et sciences de la Terre.</p>
+            <p class="subject-desc">Biologie, chimie et physique — synthèses + quiz interactifs pour la 1ère et la 2ème.</p>
             <div class="subject-meta">
-              <span class="subject-badge" style="background:rgba(123,237,159,0.12);color:var(--accent5)">Bientôt disponible</span>
+              <span class="subject-badge" style="background:rgba(123,237,159,0.12);color:var(--accent5)">✓ 16 chapitres disponibles</span>
               <div class="subject-arrow" style="border-color:rgba(123,237,159,0.3);color:var(--accent5)">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </div>
             </div>
-            <span class="coming-soon-badge">Prochainement</span>
           </div>
 
         </div>
@@ -611,9 +618,7 @@
         <div class="chapters-grid" id="chaptersGrid">
 
           <article class="chapter-card" data-search="1 numbers nombres chiffres">
-            <div class="chapter-top">
-              <span class="chapter-num">Partie 1</span>
-            </div>
+            <div class="chapter-top"><span class="chapter-num">Partie 1</span></div>
             <h3 class="chapter-title">Numbers</h3>
             <p class="chapter-desc">Nombres cardinaux de 1 à 1 000 000.</p>
             <a class="chapter-link" href="https://quizlet.com/it/1130659773/anglais-1-numbers-flash-cards/?i=36yitv&x=1jqt" target="_blank" rel="noopener">
@@ -626,7 +631,7 @@
             <div class="chapter-top"><span class="chapter-num">Partie 2</span></div>
             <h3 class="chapter-title">Ordinal numbers & date</h3>
             <p class="chapter-desc">Nombres ordinaux (1st, 2nd…) et expression de la date.</p>
-            <a class="chapter-link" href="https://quizlet.com/be/1166782290/anglais-2-ordinal-numbers-date-flash-cards/?i=36yitv&x=1jqt" target="_blank" rel="noopener">
+            <a class="chapter-link" href="https://quizlet.com/be/1166782290/anglais-2-ordinal-numbers-to-express-the-date-flash-cards/?i=36yitv&x=1jqt" target="_blank" rel="noopener">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               Ouvrir Quizlet
             </a>
@@ -636,7 +641,7 @@
             <div class="chapter-top"><span class="chapter-num">Partie 3</span></div>
             <h3 class="chapter-title">Days, months, seasons, time & frequency</h3>
             <p class="chapter-desc">Jours, mois, saisons, heure et fréquence.</p>
-            <a class="chapter-link" href="https://quizlet.com/be/1166783601/anglais-3-days-months-seasons-time-and-frequency-flash-cards/?i=36yitv&x=1jqt" target="_blank" rel="noopener">
+            <a class="chapter-link" href="https://quizlet.com/be/1166783851/anglais-3-days-months-seasons-time-and-frequency-flash-cards/?i=36yitv&x=1jqt" target="_blank" rel="noopener">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
               Ouvrir Quizlet
             </a>
@@ -792,7 +797,7 @@
         <button class="back-btn" onclick="showPage('home')">← Retour aux matières</button>
         <div style="font-size:4rem;margin-bottom:1.5rem">📝</div>
         <h2>Français</h2>
-        <p style="margin-top:1rem">Les chapitres de français arrivent bientôt.<br>Continue à réviser l'anglais en attendant !</p>
+        <p style="margin-top:1rem">Les chapitres de français arrivent bientôt.<br>Continue à réviser en attendant !</p>
       </div>
     </div>
 
@@ -802,17 +807,20 @@
         <button class="back-btn" onclick="showPage('home')">← Retour aux matières</button>
         <div style="font-size:4rem;margin-bottom:1.5rem">🔢</div>
         <h2>Mathématiques</h2>
-        <p style="margin-top:1rem">Les chapitres de maths arrivent bientôt.<br>Continue à réviser l'anglais en attendant !</p>
+        <p style="margin-top:1rem">Les chapitres de maths arrivent bientôt.<br>Continue à réviser en attendant !</p>
       </div>
     </div>
 
     <!-- ══ SCIENCES PAGE ══ -->
     <div id="page-sciences" class="page">
-      <div class="container coming-soon-page">
-        <button class="back-btn" onclick="showPage('home')">← Retour aux matières</button>
-        <div style="font-size:4rem;margin-bottom:1.5rem">🔬</div>
-        <h2>Sciences</h2>
-        <p style="margin-top:1rem">Les chapitres de sciences arrivent bientôt.<br>Continue à réviser l'anglais en attendant !</p>
+      <div class="container" style="padding-top:1.5rem;padding-bottom:0.5rem">
+        <button class="back-btn" onclick="showPage('home')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Retour aux matières
+        </button>
+      </div>
+      <div class="sciences-iframe-wrap">
+        <iframe src="sciences_ce1d.html" title="Sciences CE1D — Quiz et synthèses"></iframe>
       </div>
     </div>
 
@@ -826,7 +834,6 @@
 <script>
   const PASSWORD = 'Rocky';
 
-  // ── Password check
   function checkPw() {
     const val = document.getElementById('pwInput').value;
     const err = document.getElementById('pwError');
@@ -847,14 +854,12 @@
     if (e.key === 'Enter') checkPw();
   });
 
-  // ── Page navigation
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // ── Chapter search
   function filterChapters(val) {
     const term = val.trim().toLowerCase();
     document.querySelectorAll('.chapter-card').forEach(card => {
